@@ -10,7 +10,29 @@ end
 get '/' do
   guess = params["guess"]
   message = check_guess(guess)
-  erb :index, :locals => {:number => number, :message => message}
+  color   = get_color(guess)
+  erb :index, :locals => {:number => number, :message => message, :color => color}
+end
+
+def get_color(guess)
+  guess = guess.to_i unless guess.nil?
+  guess_plus_five  = number + 5
+  guess_minus_five = number - 5
+  if guess.nil?
+    "whitesmoke"
+  elsif guess == 0
+    "white"
+  elsif guess >= guess_plus_five
+    "red"
+  elsif guess <= guess_minus_five
+    "red"
+  elsif guess > number
+    "tomato"
+  elsif guess < number
+    "tomato"
+  elsif guess == number
+    "green"
+  end
 end
 
 def check_guess(guess)
